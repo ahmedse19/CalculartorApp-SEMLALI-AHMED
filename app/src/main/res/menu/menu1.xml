@@ -7,5 +7,7 @@
                 android:title="Scientifique"  />
             <item android:id="@+id/ConversionMasse"
                 android:title="Conversion des masses"/>
+    <item android:id="@+id/ConversionDevise"
+        android:title="Conversion des devises"/>
 
 </menu>
