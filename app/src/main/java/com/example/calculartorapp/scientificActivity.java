@@ -3,12 +3,10 @@ package com.example.calculartorapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,34 +14,32 @@ import android.widget.TextView;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
-public class MainActivity extends AppCompatActivity {
+public class scientificActivity extends AppCompatActivity {
 
     ImageView btn_1, btn_2, btn_3, btn_4, btn_5, btn_6, btn_7, btn_8, btn_9, btn_0,btn_c;
     ImageView btn_dot, btn_equal, btn_ac, btn_module, btn_plus, btn_minus, btn_multiplication;
-
+    ImageView btn_cos,btn_sin,btn_tan,btn_DivBy,btn_open,btn_close,btn_log,btn_pi,btn_powr,btn_racine;
     TextView inputTxt, OutputTxt;
 
     String data;
-
 
     public double evaluate(String expression) {
         Expression exp = new ExpressionBuilder(expression)
                 .build();
         return exp.evaluate();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu1, menu);
         return true;
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.modeScientific:
-                Intent i1 = new Intent(this,scientificActivity.class);
+            case R.id.modeStandard:
+                Intent i1 = new Intent(this, MainActivity.class);
                 this.startActivity(i1);
                 finish();
                 return true;
@@ -53,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.ConversionDevise:
-                Intent i3 = new Intent(this,DeviseConversionActivity.class);
+                Intent i3 = new Intent(this, DeviseConversionActivity.class);
                 this.startActivity(i3);
                 finish();
                 return true;
@@ -62,12 +58,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_scientific);
+
 
         OutputTxt = findViewById(R.id.outPuttxt);
         inputTxt = findViewById(R.id.inputTxt);
@@ -83,7 +78,17 @@ public class MainActivity extends AppCompatActivity {
         btn_8 = findViewById(R.id.btn_8);
         btn_9 = findViewById(R.id.btn_9);
         btn_c = findViewById(R.id.btn_c);
-
+        //
+        btn_cos = findViewById(R.id.btn_cos);
+        btn_sin = findViewById(R.id.btn_sin);
+        btn_tan = findViewById(R.id.btn_tan);
+        btn_DivBy = findViewById(R.id.btn_divByx);
+        btn_powr = findViewById(R.id.btn_powr);
+        btn_pi = findViewById(R.id.btn_pi);
+        btn_open = findViewById(R.id.btn_openP);
+        btn_close = findViewById(R.id.btn_closeP);
+        btn_racine = findViewById(R.id.btn_racine);
+        btn_log = findViewById(R.id.btn_log);
 
 
         btn_dot = findViewById(R.id.btn_dot);
@@ -240,6 +245,15 @@ public class MainActivity extends AppCompatActivity {
                 data=data.replaceAll("×","*");
                 data=data.replaceAll("%","/100");
                 data=data.replaceAll("÷","/");
+                int openCounter=0;
+                for(int i=0;i<data.length();i++){
+                    if(data.charAt(i)=='(') openCounter++;
+                    else if(data.charAt(i) == ')') openCounter--;
+                }
+                for(int i=0;i<openCounter;i++){
+                    data =data +")";
+                }
+                inputTxt.setText(data);
                 try {
                     double finalResult = evaluate(data);
 
@@ -251,6 +265,77 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btn_sin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data = inputTxt.getText().toString();
+                inputTxt.setText(data + "sin(");
+            }
+        });
+        btn_cos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data = inputTxt.getText().toString();
+                inputTxt.setText(data + "cos(");
+            }
+        });
+        btn_tan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data = inputTxt.getText().toString();
+                inputTxt.setText(data + "tan(");
+            }
+        });
+        btn_open.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data = inputTxt.getText().toString();
+                inputTxt.setText(data + "(");
+            }
+        });
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data = inputTxt.getText().toString();
+                inputTxt.setText(data + ")");
+            }
+        });
+        btn_pi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data = inputTxt.getText().toString();
+                inputTxt.setText(data + " pi ");
+            }
+        });
+        btn_racine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data = inputTxt.getText().toString();
+                inputTxt.setText(data + "sqrt(");
+            }
+        });
+        btn_powr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data = inputTxt.getText().toString();
+                inputTxt.setText(data + "^");
+            }
+        });
+        btn_DivBy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data = inputTxt.getText().toString();
+                inputTxt.setText("1 / ("+data+")");
+            }
+        });
+        btn_log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data = inputTxt.getText().toString();
+                inputTxt.setText(data + "log(");
+            }
+        });
     }
-}
 
+
+}

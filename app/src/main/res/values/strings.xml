@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">CalculartorApp</string>
+    <string name="app_name">CalculatorApp</string>
+    <string name="from_unit_prompt">Convertir de</string>
+    <string name="to_unit_prompt">Convertir vers</string>
 </resources>
